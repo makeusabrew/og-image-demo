@@ -1,5 +1,7 @@
 import { ImageResponse } from "next/server";
 
+export const runtime = "edge";
+
 export const size = {
   width: 1200,
   height: 630,
@@ -39,6 +41,12 @@ export default function Image({ params }: { params: { name: string } }) {
         Happy {dayName}, {name}!
       </div>
     ),
-    { ...size }
+    {
+      ...size,
+      headers: {
+        "Cache-Control":
+          "private, no-cache, no-store, max-age=0, must-revalidate",
+      },
+    }
   );
 }
